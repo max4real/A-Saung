@@ -1,6 +1,5 @@
 import 'package:a_saung/modules/due_list/v_due_list.dart';
 import 'package:a_saung/modules/guest_list/v_guest_list.dart';
-import 'package:a_saung/modules/guest_register/c_guest_register.dart';
 import 'package:a_saung/modules/guest_register/v_guest_register.dart';
 import 'package:a_saung/modules/main/c_mian.dart';
 import 'package:a_saung/services/c_theme.dart';
@@ -108,7 +107,9 @@ class _MainPageState extends State<MainPage> {
       case 0:
         return  GuestRegisterPage();
       case 1:
-        return const GuestListPage();
+        // return const GuestListPage();
+        return const DataTableExample();
+
       case 2:
         return const DueListPage();
       default:

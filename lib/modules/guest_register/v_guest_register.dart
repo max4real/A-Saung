@@ -43,7 +43,7 @@ class GuestRegisterPage extends StatelessWidget {
                         valueListenable: controller.xValidName,
                         builder: (context, xValidName, child) {
                           return TextField(
-                            controller: controller.name,
+                            controller: controller.txtname,
                             keyboardType: TextInputType.name,
                             onTapOutside: (event) {
                               dismissKeyboard();
@@ -75,12 +75,12 @@ class GuestRegisterPage extends StatelessWidget {
                   ),
                   SizedBox(
                       width: double.infinity,
-                      height: 50,
+                      height: 70,
                       child: ValueListenableBuilder(
                         valueListenable: controller.xValidPhone,
                         builder: (context, value, child) {
                           return TextField(
-                            controller: controller.phone,
+                            controller: controller.txtphone,
                             keyboardType: TextInputType.phone,
                             onTapOutside: (event) {
                               dismissKeyboard();
@@ -88,10 +88,13 @@ class GuestRegisterPage extends StatelessWidget {
                             onChanged: (value) {
                               controller.checkPhoneField();
                             },
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d{0,9}$'))
+                            maxLength: 9,
+                            inputFormatters: <TextInputFormatter>[ ///here
+                              // FilteringTextInputFormatter.allow(
+                              //     RegExp(r'^\d{0,9}$'))
+                                  FilteringTextInputFormatter.allow(RegExp(r'^(0|[1-9][0-9]*)$'))
                             ],
+                            
                             decoration: InputDecoration(
                                 prefixText: "+959",
                                 border: const OutlineInputBorder(),
@@ -179,13 +182,12 @@ class GuestRegisterPage extends StatelessWidget {
                             builder: (context, value, child) {
                               return TextField(
                                 keyboardType: TextInputType.number,
-                                controller: controller.period,
+                                controller: controller.txtPeriod,
                                 onTapOutside: (e) {
                                   dismissKeyboard();
                                 },
                                 onChanged: (value) {
                                   controller.checkPeriodField();
-                                  
                                 },
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly
@@ -218,7 +220,7 @@ class GuestRegisterPage extends StatelessWidget {
                             builder: (context, value, child) {
                               return TextField(
                                 keyboardType: TextInputType.number,
-                                controller: controller.seater,
+                                controller: controller.txtseater,
                                 onTapOutside: (event) {
                                   dismissKeyboard();
                                 },
@@ -260,7 +262,7 @@ class GuestRegisterPage extends StatelessWidget {
                         valueListenable: controller.xValidAmount,
                         builder: (context, value, child) {
                           return TextField(
-                            controller: controller.amount,
+                            controller: controller.txtAmount,
                             onTapOutside: (event) {
                               dismissKeyboard();
                             },

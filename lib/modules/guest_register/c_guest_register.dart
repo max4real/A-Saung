@@ -9,17 +9,47 @@ class GuestRegisterController extends GetxController {
   ValueNotifier<bool> xValidPeriod = ValueNotifier(true);
   ValueNotifier<bool> xValidSeater = ValueNotifier(true);
   ValueNotifier<bool> xValidAmount = ValueNotifier(true);
-
-  TextEditingController name = TextEditingController(text: "");
-  TextEditingController phone = TextEditingController(text: "");
-  TextEditingController period = TextEditingController(text: "1");
-  TextEditingController seater = TextEditingController(text: "1");
-  TextEditingController amount = TextEditingController(text: "60000");
+  TextEditingController txtname = TextEditingController(text: "");
+  TextEditingController txtphone = TextEditingController(text: "");
+  TextEditingController txtPeriod = TextEditingController(text: "1");
+  TextEditingController txtseater = TextEditingController(text: "1");
+  TextEditingController txtAmount = TextEditingController(text: "60000");
   ValueNotifier<DateTime> startDate = ValueNotifier(DateTime.now());
 
   String countryCode = "+959";
   String phonePattern =
       r'^\+959[0-9]{7,9}$'; // start with +959 follow by 6 to 9 digits
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    listenPeriodTextField();
+    listenSeaterTextField();
+  }
+
+  void listenPeriodTextField() {
+    txtPeriod.addListener(() {
+      int? period = int.tryParse(txtPeriod.text);
+      int? seater = int.tryParse(txtseater.text);
+      if (period != null && seater != null) {
+        txtAmount.text = (period * seater * 60000).toString();
+      } else {
+        txtAmount.text = "0";
+      }
+    });
+  }
+
+  void listenSeaterTextField() {
+    txtseater.addListener(() {
+      int? seater = int.tryParse(txtseater.text);
+      int? period = int.tryParse(txtPeriod.text);
+      if (seater != null && period != null) {
+        txtAmount.text = (seater * period * 60000).toString();
+      } else {
+        txtAmount.text = "0";
+      }
+    });
+  }
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -41,18 +71,18 @@ class GuestRegisterController extends GetxController {
     GetConnect client = GetConnect(timeout: const Duration(seconds: 20));
     String sDate =
         "${startDate.value.year}-${startDate.value.month}-${startDate.value.day}";
-    String phoneNumber = countryCode + phone.text;
+    String phoneNumber = countryCode + txtphone.text;
 
     final response = await client.post(url, {
-      "name": name.text,
+      "name": txtname.text,
       "phone": phoneNumber,
       "gender": getGender(),
       "booking": {
         "remark": "hi",
         "startDate": sDate,
-        "period": int.tryParse(period.text) ?? -1,
-        "seater": int.tryParse(seater.text) ?? -1,
-        "price": int.tryParse(amount.text) ?? -1
+        "period": int.tryParse(txtPeriod.text) ?? -1,
+        "seater": int.tryParse(txtseater.text) ?? -1,
+        "price": int.tryParse(txtAmount.text) ?? -1
       }
     });
 
@@ -79,19 +109,19 @@ class GuestRegisterController extends GetxController {
   }
 
   void checkNameField() {
-    if (name.text.isEmpty) {
+    if (txtname.text.isEmpty) {
       xValidName.value = false;
-    } else if (name.text.isNotEmpty) {
+    } else if (txtname.text.isNotEmpty) {
       xValidName.value = true;
     }
   }
 
   void checkPhoneField() {
-    if (phone.text.isEmpty) {
+    if (txtphone.text.isEmpty) {
       xValidPhone.value = false;
-    } else if (phone.text.isNotEmpty) {
+    } else if (txtphone.text.isNotEmpty) {
       RegExp phoneRegex = RegExp(phonePattern);
-      if (phoneRegex.hasMatch(countryCode + phone.text)) {
+      if (phoneRegex.hasMatch(countryCode + txtphone.text)) {
         xValidPhone.value = true;
       } else {
         xValidPhone.value = false;
@@ -100,25 +130,25 @@ class GuestRegisterController extends GetxController {
   }
 
   void checkPeriodField() {
-    if (period.text.isEmpty) {
+    if (txtPeriod.text.isEmpty) {
       xValidPeriod.value = false;
-    } else if (period.text.isNotEmpty) {
+    } else if (txtPeriod.text.isNotEmpty) {
       xValidPeriod.value = true;
     }
   }
 
   void checkSeaterField() {
-    if (seater.text.isEmpty) {
+    if (txtseater.text.isEmpty) {
       xValidSeater.value = false;
-    } else if (period.text.isNotEmpty) {
+    } else if (txtPeriod.text.isNotEmpty) {
       xValidSeater.value = true;
     }
   }
 
   void checkAmountField() {
-    if (amount.text.isEmpty) {
+    if (txtAmount.text.isEmpty) {
       xValidAmount.value = false;
-    } else if (period.text.isNotEmpty) {
+    } else if (txtPeriod.text.isNotEmpty) {
       xValidAmount.value = true;
     }
   }
