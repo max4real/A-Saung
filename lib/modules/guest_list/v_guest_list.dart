@@ -52,9 +52,13 @@ class GuestListPage extends StatelessWidget {
                                 onChanged: (value) {
                                   controller.searchGuest();
                                 },
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                     hintText: "Search",
-                                    suffixIcon: Icon(Icons.search)),
+                                    suffixIcon: IconButton(
+                                        onPressed: () {
+                                          controller.clearSearchBar();
+                                        },
+                                        icon: const Icon(Icons.clear))),
                               ),
                             ),
                             const Spacer(),

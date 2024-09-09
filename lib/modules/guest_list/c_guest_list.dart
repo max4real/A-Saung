@@ -45,16 +45,30 @@ class GuestListController extends GetxController {
   void checkMaleRadio() {
     if (genderRadio.value == 1) {
       genderRadio.value = 0;
+      searchGuest();
     } else {
       genderRadio.value = 1;
+      List<GuestModel> temp = [];
+      temp = guestList.value.where((test) {
+        return test.guestGender.contains("M") &&
+            test.guestName.isCaseInsensitiveContains(txtSearch.text);
+      }).toList();
+      guestListFiltered.value = temp;
     }
   }
 
   void checkFemaleRadio() {
     if (genderRadio.value == 2) {
       genderRadio.value = 0;
+      searchGuest();
     } else {
       genderRadio.value = 2;
+      List<GuestModel> temp = [];
+      temp = guestList.value.where((test) {
+        return test.guestGender.contains("F") &&
+            test.guestName.isCaseInsensitiveContains(txtSearch.text);
+      }).toList();
+      guestListFiltered.value = temp;
     }
   }
 
@@ -68,5 +82,10 @@ class GuestListController extends GetxController {
     } else {
       guestListFiltered.value = guestList.value;
     }
+  }
+
+  void clearSearchBar() {
+    txtSearch.clear();
+    guestListFiltered.value = guestList.value;
   }
 }

@@ -103,9 +103,7 @@ class _MainPageState extends State<MainPage> {
       case 1:
         return const GuestListPage();
       case 2:
-        // return const DueListPage();
-        return const MyApp();
-        
+        return const DueListPage();
       default:
         return GuestRegisterPage();
     }
