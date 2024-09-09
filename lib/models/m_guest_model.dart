@@ -3,59 +3,34 @@ class GuestModel {
   String guestName;
   String guestPhone;
   String guestGender;
-  bool guestIsDeleted;
-  List<BookingPeriod> bookingPeriod;
+  DateTime guestStartDate;
+  DateTime guestEndDate;
   GuestModel({
     required this.guestId,
     required this.guestName,
     required this.guestPhone,
     required this.guestGender,
-    required this.guestIsDeleted,
-    required this.bookingPeriod,
+    required this.guestStartDate,
+    required this.guestEndDate,
   });
-
   factory GuestModel.fromAPI({required Map<String, dynamic> data}) {
-    List<BookingPeriod> temp = [];
-    Iterable iterable = data["bookingPeriod"] ?? [];
-
-    for (var element in iterable) {
-      BookingPeriod eachPeriod = BookingPeriod(
-          remark: element["remark"].toString(),
-          startDate: DateTime.tryParse(element["startDate"].toString()) ??
-              DateTime(2024, 9, 10),
-          dueDate: DateTime.tryParse(element["dueDate"].toString()) ??
-              DateTime(2014, 9, 10),
-          period: int.tryParse(element["period"].toString()) ?? -1,
-          seater: int.tryParse(element["seater"].toString()) ?? -1,
-          price: double.tryParse(element["price"].toString()) ?? -1,
-          status: element["status"].toString());
-      temp.add(eachPeriod);
-    }
     return GuestModel(
-      guestId: data["id"].toString(),
-      guestName: data["name"].toString(),
-      guestPhone: data["phone"].toString(),
-      guestGender: data["gender"].toString(),
-      guestIsDeleted: bool.tryParse(data["isDeleted"].toString()) ?? false,
-      bookingPeriod: temp,
-    );
+        guestId: data["id"].toString(),
+        guestName: data["name"].toString(),
+        guestPhone: data["phone"].toString(),
+        guestGender: data["gender"].toString(),
+        guestStartDate:
+            DateTime.tryParse(data["stratDate"].toString()) ?? DateTime.now(),
+        guestEndDate:
+            DateTime.tryParse(data["endDate"].toString()) ?? DateTime.now());
   }
 }
-
-class BookingPeriod {
-  String remark;
-  DateTime startDate;
-  DateTime dueDate;
-  int period;
-  int seater;
-  double price;
-  String status;
-  BookingPeriod(
-      {required this.remark,
-      required this.startDate,
-      required this.dueDate,
-      required this.period,
-      required this.seater,
-      required this.price,
-      required this.status});
-}
+// "_data": [
+//     {
+//       "id": "09338704-5fa6-495e-8f84-9936bb7aac29",
+//       "name": "Ko Ko Soe",
+//       "phone": "+959789786123",
+//       "gender": "M",
+//       "stratDate": "2024-09-30T09:00:00.000Z",
+//       "endDate": "2024-12-30T09:00:00.000Z"
+//     },

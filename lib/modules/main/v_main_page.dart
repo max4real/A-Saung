@@ -20,11 +20,11 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     MainController controller = Get.put(MainController());
-    ThemeController themeController=Get.find();
+    ThemeController themeController = Get.find();
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 223, 172, 53),
       backgroundColor: const Color(0XFFF7F7F7),
-            resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
 
       body: Column(
         children: [
@@ -37,15 +37,9 @@ class _MainPageState extends State<MainPage> {
             width: double.infinity,
             height: 60,
             decoration: const BoxDecoration(
-              // color: const Color.fromARGB(255, 85, 94, 228).withOpacity(0.7),
-              // color: const Color(0XFFDEAB42).withOpacity(01),
-              // color: themeController.primary,
-              color:  Colors.black,
-
-              borderRadius:const  BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10)
-              ),
+              color: Colors.black,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             ),
             padding: EdgeInsets.only(
               bottom: (MediaQuery.of(context).viewPadding.bottom),
@@ -62,7 +56,7 @@ class _MainPageState extends State<MainPage> {
                         Icons.person_add_alt_1,
                         size: 25,
                         color: (index == 0)
-                            ? const Color(0XFF5E6AE2)
+                            ? themeController.secondary
                             : Colors.white,
                       )),
                 ),
@@ -76,7 +70,7 @@ class _MainPageState extends State<MainPage> {
                         Icons.person_search_rounded,
                         size: 25,
                         color: (index == 1)
-                            ? const Color(0XFF5E6AE2)
+                            ? themeController.secondary
                             : Colors.white,
                       )),
                 ),
@@ -90,7 +84,7 @@ class _MainPageState extends State<MainPage> {
                         Icons.view_list_rounded,
                         size: 25,
                         color: (index == 2)
-                            ? const Color(0XFF5E6AE2)
+                            ? themeController.secondary
                             : Colors.white,
                       )),
                 ),
@@ -105,15 +99,15 @@ class _MainPageState extends State<MainPage> {
   Widget shownePage() {
     switch (index) {
       case 0:
-        return  GuestRegisterPage();
+        return GuestRegisterPage();
       case 1:
-        // return const GuestListPage();
-        return const DataTableExample();
-
+        return const GuestListPage();
       case 2:
-        return const DueListPage();
+        // return const DueListPage();
+        return const MyApp();
+        
       default:
-        return  GuestRegisterPage();
+        return GuestRegisterPage();
     }
   }
 }
