@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    MainController controller = Get.put(MainController());
+    Get.put(MainController());
     ThemeController themeController = Get.find();
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 223, 172, 53),
