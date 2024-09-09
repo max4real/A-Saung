@@ -22,6 +22,8 @@ class GuestListController extends GetxController {
   }
 
   Future<void> fetchGuest() async {
+    genderRadio.value = 0;
+    txtSearch.clear();
     String url = ApiEndPoint.baseUrl + ApiEndPoint.endpointGuest;
 
     GetConnect client = GetConnect(timeout: const Duration(seconds: 20));
@@ -48,12 +50,7 @@ class GuestListController extends GetxController {
       searchGuest();
     } else {
       genderRadio.value = 1;
-      List<GuestModel> temp = [];
-      temp = guestList.value.where((test) {
-        return test.guestGender.contains("M") &&
-            test.guestName.isCaseInsensitiveContains(txtSearch.text);
-      }).toList();
-      guestListFiltered.value = temp;
+      filterByGender("M");
     }
   }
 
@@ -63,22 +60,16 @@ class GuestListController extends GetxController {
       searchGuest();
     } else {
       genderRadio.value = 2;
-      List<GuestModel> temp = [];
-      temp = guestList.value.where((test) {
-        return test.guestGender.contains("F") &&
-            test.guestName.isCaseInsensitiveContains(txtSearch.text);
-      }).toList();
-      guestListFiltered.value = temp;
+      filterByGender("F");
     }
   }
 
   void searchGuest() {
+    if (genderRadio.value != 0) {
+      genderRadio.value = 0;
+    }
     if (txtSearch.text.isNotEmpty) {
-      List<GuestModel> temp = [];
-      temp = guestList.value.where((test) {
-        return test.guestName.isCaseInsensitiveContains(txtSearch.text);
-      }).toList();
-      guestListFiltered.value = temp;
+      filterByName();
     } else {
       guestListFiltered.value = guestList.value;
     }
@@ -86,6 +77,47 @@ class GuestListController extends GetxController {
 
   void clearSearchBar() {
     txtSearch.clear();
-    guestListFiltered.value = guestList.value;
+    // checkFemaleRadio();
+    // checkMaleRadio();
+    switch (genderRadio.value) {
+      case 0:
+        filterByName();
+      case 1:
+        filterByGender("M");
+      case 2:
+        filterByGender("F");
+    }
   }
+
+  void filterByGender(String g) {
+    List<GuestModel> temp = [];
+    temp = guestList.value.where((test) {
+      return test.guestGender.contains(g) &&
+          test.guestName.isCaseInsensitiveContains(txtSearch.text);
+    }).toList();
+    guestListFiltered.value = temp;
+  }
+
+  void filterByName() {
+    List<GuestModel> temp = [];
+    temp = guestList.value.where((test) {
+      return test.guestName.isCaseInsensitiveContains(txtSearch.text);
+    }).toList();
+    guestListFiltered.value = temp;
+  }
+
+  // bool isAcenSort = true;
+  // void sortName() {
+  //   List<GuestModel> temp = [];
+  //   if (isAcenSort) {
+  //     guestListFiltered.value.sort((a, b) {
+  //       return a.guestName.compareTo(b.guestName);
+  //     });
+  //   } else {
+  //     guestListFiltered.value.sort((a, b) {
+  //       return b.guestName.compareTo(a.guestName);
+  //     });
+  //   }
+  //   isAcenSort = !isAcenSort;
+  // }
 }

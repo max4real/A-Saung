@@ -128,6 +128,7 @@ class GuestListPage extends StatelessWidget {
       builder: (context, value, child) {
         return DataTable(
             showBottomBorder: true,
+            showCheckboxColumn: false,
             dataRowHeight: 65,
             columns: const <DataColumn>[
               DataColumn(
@@ -182,7 +183,12 @@ class GuestListPage extends StatelessWidget {
             ),
           ],
         )),
-      ]);
+      ],
+      onSelectChanged: (newValue) {
+          print(element.guestName);
+          /////
+        },
+      );
       tempDataRow.add(dataRow);
     }
     return tempDataRow;

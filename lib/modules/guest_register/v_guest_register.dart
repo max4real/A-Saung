@@ -14,6 +14,13 @@ class GuestRegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     GuestRegisterController controller = Get.put(GuestRegisterController());
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "အသစ်ထည့်",
+          style: TextStyle(fontSize: 17),
+        ),
+        backgroundColor: themeController.secondary,
+      ),
       backgroundColor: themeController.background,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -24,18 +31,11 @@ class GuestRegisterPage extends StatelessWidget {
               padding: EdgeInsets.only(
                 left: 30,
                 right: 30,
-                top: (MediaQuery.of(context).viewPadding.top) + 30,
+                top: (MediaQuery.of(context).viewPadding.top),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text(
-                    "အသစ်ထည့်",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   SizedBox(
                       width: double.infinity,
                       height: 50,
@@ -89,12 +89,13 @@ class GuestRegisterPage extends StatelessWidget {
                               controller.checkPhoneField();
                             },
                             maxLength: 9,
-                            inputFormatters: <TextInputFormatter>[ ///here
+                            inputFormatters: <TextInputFormatter>[
+                              ///here
                               // FilteringTextInputFormatter.allow(
                               //     RegExp(r'^\d{0,9}$'))
-                                  FilteringTextInputFormatter.allow(RegExp(r'^(0|[1-9][0-9]*)$'))
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^(0|[1-9][0-9]*)$'))
                             ],
-                            
                             decoration: InputDecoration(
                                 prefixText: "+959",
                                 border: const OutlineInputBorder(),

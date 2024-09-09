@@ -1,3 +1,4 @@
+import 'package:a_saung/modules/guest_register/v_guest_register.dart';
 import 'package:a_saung/services/api_endpoint.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,8 @@ class GuestRegisterController extends GetxController {
   ValueNotifier<bool> xValidPeriod = ValueNotifier(true);
   ValueNotifier<bool> xValidSeater = ValueNotifier(true);
   ValueNotifier<bool> xValidAmount = ValueNotifier(true);
+  ValueNotifier<int?> q1 = ValueNotifier(1); //1= male 2=female
+
   TextEditingController txtname = TextEditingController(text: "");
   TextEditingController txtphone = TextEditingController(text: "");
   TextEditingController txtPeriod = TextEditingController(text: "1");
@@ -91,12 +94,20 @@ class GuestRegisterController extends GetxController {
     // String statusCode = response.body["_metadata"]["statusCode"].toString();
     if (response.isOk) {
       Get.snackbar("Success", "Guest Created Successfuly");
+      txtname.text = "";
+      txtphone.text = "";
+      txtPeriod.text = "1";
+      txtseater.text = "1";
+      txtAmount.text = "60000";
+      q1.value = 1;
+      startDate.value = DateTime.now();
+      xValidName.value = false;
+      xValidPhone.value = false;
     } else {
       Get.snackbar("Error", "Something Went Wrong");
     }
   }
 
-  ValueNotifier<int?> q1 = ValueNotifier(1); //1= male 2=female
   String getGender() {
     switch (q1.value) {
       case 1:

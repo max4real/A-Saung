@@ -22,7 +22,7 @@ class GuestModel {
         guestStartDate:
             DateTime.tryParse(data["stratDate"].toString()) ?? DateTime.now(),
         guestEndDate:
-            DateTime.tryParse(data["endDate"].toString()) ?? DateTime.now());
+            DateTime.tryParse(data["dueDate"].toString()) ?? DateTime.now());
   }
 }
 // "_data": [
@@ -32,5 +32,5 @@ class GuestModel {
 //       "phone": "+959789786123",
 //       "gender": "M",
 //       "stratDate": "2024-09-30T09:00:00.000Z",
-//       "endDate": "2024-12-30T09:00:00.000Z"
+//       "dueDate": "2024-12-30T09:00:00.000Z"
 //     },
