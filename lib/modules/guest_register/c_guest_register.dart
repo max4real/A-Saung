@@ -1,3 +1,4 @@
+import 'package:a_saung/c_data_controller.dart';
 import 'package:a_saung/services/api_endpoint.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,9 @@ class GuestRegisterController extends GetxController {
   TextEditingController txtphone = TextEditingController(text: "");
   TextEditingController txtPeriod = TextEditingController(text: "1");
   TextEditingController txtseater = TextEditingController(text: "1");
-  TextEditingController txtAmount = TextEditingController(text: "60000");
+  TextEditingController txtAmount =
+      TextEditingController(text: priceRate.toString());
+
   ValueNotifier<DateTime> startDate = ValueNotifier(DateTime.now());
 
   String countryCode = "+959";
@@ -34,7 +37,7 @@ class GuestRegisterController extends GetxController {
       int? period = int.tryParse(txtPeriod.text);
       int? seater = int.tryParse(txtseater.text);
       if (period != null && seater != null) {
-        txtAmount.text = (period * seater * 60000).toString();
+        txtAmount.text = (period * seater * priceRate).toString();
       } else {
         txtAmount.text = "0";
       }
@@ -46,7 +49,7 @@ class GuestRegisterController extends GetxController {
       int? seater = int.tryParse(txtseater.text);
       int? period = int.tryParse(txtPeriod.text);
       if (seater != null && period != null) {
-        txtAmount.text = (seater * period * 60000).toString();
+        txtAmount.text = (seater * period * priceRate).toString();
       } else {
         txtAmount.text = "0";
       }
@@ -97,7 +100,7 @@ class GuestRegisterController extends GetxController {
       txtphone.text = "";
       txtPeriod.text = "1";
       txtseater.text = "1";
-      txtAmount.text = "60000";
+      txtAmount.text = priceRate.toString();
       q1.value = 1;
       startDate.value = DateTime.now();
       xValidName.value = false;

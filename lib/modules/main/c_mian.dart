@@ -8,4 +8,5 @@ class MainController extends GetxController {
   }
 
   Future<void> initLoad() async {}
+  final Rx<int> selectedIndex = 0.obs;
 }

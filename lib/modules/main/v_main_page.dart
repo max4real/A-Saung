@@ -6,6 +6,7 @@ import 'package:a_saung/services/c_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -15,89 +16,38 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int index = 0;
-
   @override
   Widget build(BuildContext context) {
-    Get.put(MainController());
+    MainController controller = Get.put(MainController());
     ThemeController themeController = Get.find();
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 223, 172, 53),
-      backgroundColor: const Color(0XFFF7F7F7),
-      resizeToAvoidBottomInset: false,
-
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              child: shownePage(),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 60,
-            decoration: const BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-            ),
-            padding: EdgeInsets.only(
-              bottom: (MediaQuery.of(context).viewPadding.bottom),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: IconButton(
-                      onPressed: () {
-                        index = 0;
-                        setState(() {});
-                      },
-                      icon: Icon(
-                        Icons.person_add_alt_1,
-                        size: 25,
-                        color: (index == 0)
-                            ? themeController.secondary
-                            : Colors.white,
-                      )),
-                ),
-                Expanded(
-                  child: IconButton(
-                      onPressed: () {
-                        index = 1;
-                        setState(() {});
-                      },
-                      icon: Icon(
-                        Icons.person_search_rounded,
-                        size: 25,
-                        color: (index == 1)
-                            ? themeController.secondary
-                            : Colors.white,
-                      )),
-                ),
-                Expanded(
-                  child: IconButton(
-                      onPressed: () {
-                        index = 2;
-                        setState(() {});
-                      },
-                      icon: Icon(
-                        Icons.view_list_rounded,
-                        size: 25,
-                        color: (index == 2)
-                            ? themeController.secondary
-                            : Colors.white,
-                      )),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+      resizeToAvoidBottomInset: true,
+      backgroundColor: themeController.background,
+      bottomNavigationBar: Obx(() {
+        return NavigationBar(
+          elevation: 0,
+          height: 65,
+          selectedIndex: controller.selectedIndex.value,
+          onDestinationSelected: (value) {
+            controller.selectedIndex.value = value;
+          },
+          destinations: const [
+            NavigationDestination(icon: Icon(Iconsax.user_add), label: "ADD"),
+            NavigationDestination(
+                icon: Icon(Iconsax.search_normal), label: "SEARCH"),
+            NavigationDestination(icon: Icon(Iconsax.calendar), label: "DUE"),
+          ],
+        );
+      }),
+      body: Obx(() {
+        return shownePage();
+      }),
     );
   }
 
   Widget shownePage() {
-    switch (index) {
+    MainController controller = Get.find();
+    switch (controller.selectedIndex.value) {
       case 0:
         return GuestRegisterPage();
       case 1:

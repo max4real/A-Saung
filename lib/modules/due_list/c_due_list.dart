@@ -36,4 +36,15 @@ class DueListController extends GetxController {
       Get.snackbar("Error", "Something Wrong");
     }
   }
+
+  String checkDay(int dueDay) {
+    switch (dueDay) {
+      case 0:
+        return "Today";
+      case 1:
+        return "Tomorrow";
+      default:
+        return "$dueDay Days";
+    }
+  }
 }

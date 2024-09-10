@@ -94,7 +94,7 @@ class DueListPage extends StatelessWidget {
           DataCell(SizedBox(
             width: 100,
             child: Text(
-              (element.dueDays == 1) ? "Tomorrow" : "${element.dueDays} Days",
+              controller.checkDay(element.dueDays),
               style: const TextStyle(color: Colors.redAccent),
             ),
           )),
