@@ -83,7 +83,7 @@ class GuestRegisterController extends GetxController {
       "phone": phoneNumber,
       "gender": getGender(),
       "booking": {
-        "remark": "hi",
+        "remark": "",
         "startDate": sDate,
         "period": int.tryParse(txtPeriod.text) ?? -1,
         "seater": int.tryParse(txtseater.text) ?? -1,
@@ -153,7 +153,7 @@ class GuestRegisterController extends GetxController {
   void checkSeaterField() {
     if (txtseater.text.isEmpty) {
       xValidSeater.value = false;
-    } else if (txtPeriod.text.isNotEmpty) {
+    } else if (txtseater.text.isNotEmpty) {
       xValidSeater.value = true;
     }
   }
@@ -161,7 +161,7 @@ class GuestRegisterController extends GetxController {
   void checkAmountField() {
     if (txtAmount.text.isEmpty) {
       xValidAmount.value = false;
-    } else if (txtPeriod.text.isNotEmpty) {
+    } else if (txtAmount.text.isNotEmpty) {
       xValidAmount.value = true;
     }
   }

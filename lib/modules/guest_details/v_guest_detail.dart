@@ -1,7 +1,7 @@
-import 'package:a_saung/c_data_controller.dart';
 import 'package:a_saung/modules/guest_details/c_guest_detail.dart';
 import 'package:a_saung/services/c_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -13,6 +13,7 @@ class GuestDetailPage extends StatelessWidget {
     GuestDetailController controller = Get.put(GuestDetailController());
     ThemeController themeController = Get.find();
     return Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: themeController.background,
         body: SafeArea(
             child: ValueListenableBuilder(
@@ -149,7 +150,9 @@ class GuestDetailPage extends StatelessWidget {
                                       height: 40,
                                       width: 150,
                                       child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            showSheet();
+                                          },
                                           child: const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -238,5 +241,198 @@ class GuestDetailPage extends StatelessWidget {
             }
           },
         )));
+  }
+
+  void showSheet() {
+    GuestDetailController controller = Get.find();
+    ThemeController themeController = Get.find();
+    Get.bottomSheet(
+      isDismissible: false,
+      Container(
+        height: 350,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          color: Colors.white,
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 70,
+                  width: double.infinity,
+                  child: Card(
+                      elevation: 0.5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 15),
+                            child: Text('Extend Month'),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              controller.removeMonth();
+                            },
+                            icon: const Icon(Iconsax.minus),
+                          ),
+                          ValueListenableBuilder(
+                            valueListenable: controller.txtPeriod,
+                            builder: (context, value, child) {
+                              return Container(
+                                width: 40,
+                                height: 40,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                    color: themeController.secondary,
+                                    borderRadius: BorderRadius.circular(25)),
+                                child: Center(
+                                  child: Text(
+                                    value.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                controller.addMonth();
+                              },
+                              icon: const Icon(Iconsax.add)),
+                          const SizedBox(width: 15)
+                        ],
+                      )),
+                ),
+                SizedBox(
+                  height: 70,
+                  width: double.infinity,
+                  child: Card(
+                      elevation: 0.5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 15),
+                            child: Text('Seater'),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              controller.removeSeater();
+                            },
+                            icon: const Icon(Iconsax.minus),
+                          ),
+                          ValueListenableBuilder(
+                            valueListenable: controller.txtSeater,
+                            builder: (context, value, child) {
+                              return Container(
+                                width: 40,
+                                height: 40,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                    color: themeController.secondary,
+                                    borderRadius: BorderRadius.circular(25)),
+                                child: Center(
+                                  child: Text(
+                                    value.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                controller.addSeater();
+                              },
+                              icon: const Icon(Iconsax.add)),
+                          const SizedBox(width: 15)
+                        ],
+                      )),
+                ),
+                SizedBox(
+                  height: 70,
+                  width: double.infinity,
+                  child: Card(
+                      elevation: 0.5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 15),
+                            child: Text('Amount'),
+                          ),
+                          const Spacer(),
+                          SizedBox(
+                              width: 130,
+                              height: 45,
+                              child: ValueListenableBuilder(
+                                valueListenable: controller.xValidAmount,
+                                builder: (context, value, child) {
+                                  return TextField(
+                                    controller: controller.txtAmount,
+                                    // onTapOutside: (event) {
+                                    //   dismissKeyboard();
+                                    // },
+                                    onChanged: (value) {
+                                      controller.checkAmountField();
+                                    },
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        border: const OutlineInputBorder(),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: value
+                                                    ? Colors.grey
+                                                    : const Color.fromARGB(
+                                                        255, 255, 132, 123))),
+                                        prefixIcon: Icon(Iconsax.moneys,
+                                            color: themeController.secondary),
+                                        label: const Text(
+                                          "Amount",
+                                          style: TextStyle(fontSize: 14),
+                                        )),
+                                  );
+                                },
+                              )),
+                          const SizedBox(width: 15)
+                        ],
+                      )),
+                ),
+                const Divider(),
+                const SizedBox(height: 15),
+                SizedBox(
+                    height: 40,
+                    width: 150,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          controller.CheckAllFeilds();
+                        },
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("SAVE"),
+                            SizedBox(width: 5),
+                            Icon(Iconsax.save_21, size: 15)
+                          ],
+                        )))
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

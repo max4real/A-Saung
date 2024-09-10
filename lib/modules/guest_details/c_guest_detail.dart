@@ -7,17 +7,53 @@ import 'package:get/get.dart';
 class GuestDetailController extends GetxController {
   DataController dataController = Get.find();
   ValueNotifier<bool> xFetching = ValueNotifier(false);
+  ValueNotifier<bool> xBooking = ValueNotifier(false);
   ValueNotifier<DetailModel?> guestDetail = ValueNotifier(null);
+
+  ValueNotifier<int> txtPeriod = ValueNotifier(1);
+  ValueNotifier<int> txtSeater = ValueNotifier(1);
+  ValueNotifier<bool> xValidAmount = ValueNotifier(true);
+  TextEditingController txtAmount =
+      TextEditingController(text: priceRate.toString());
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     initLoad();
+    listenPeriodText();
+    listenSeaterText();
+    listenAmountTextField();
   }
 
   Future<void> initLoad() async {
     fetchGuest();
+  }
+
+  void listenPeriodText() {
+    txtPeriod.addListener(() {
+      int period = txtPeriod.value;
+      int seater = txtSeater.value;
+      txtAmount.text = (period * seater * priceRate).toString();
+    });
+  }
+
+  void listenSeaterText() {
+    txtSeater.addListener(() {
+      int period = txtPeriod.value;
+      int seater = txtSeater.value;
+      txtAmount.text = (seater * period * priceRate).toString();
+    });
+  }
+
+  void listenAmountTextField() {
+    txtAmount.addListener(() {
+      if (txtAmount.text.isEmpty) {
+        xValidAmount.value = false;
+      } else if (txtAmount.text.isNotEmpty) {
+        xValidAmount.value = true;
+      }
+    });
   }
 
   Future<void> fetchGuest() async {
@@ -33,6 +69,68 @@ class GuestDetailController extends GetxController {
       guestDetail.value = guestModel;
     } else {
       Get.snackbar("Error", "Can't get profile data right now.");
+    }
+  }
+
+  Future<void> fetchBookingExtend() async {
+    String url =
+        "${ApiEndPoint.baseUrl}${ApiEndPoint.endpointGuest}/${dataController.guestID}/extend-booking-period";
+    xBooking.value = true;
+    Get.dialog(const Center(
+      child: CircularProgressIndicator(),
+    ));
+    GetConnect client = GetConnect(timeout: const Duration(seconds: 20));
+    Response response = await client.post(url, {
+      "remark": "",
+      "period": txtPeriod.value,
+      "seater": txtSeater.value,
+      "price": int.tryParse(txtAmount.text) ?? -1
+    });
+    xBooking.value = false;
+    Get.back();
+    if (response.isOk) {
+      Get.snackbar("Success", "Guest Created Successfuly");
+      txtPeriod.value = 1;
+      txtSeater.value = 1;
+      txtAmount.text = priceRate.toString();
+    } else {
+      Get.snackbar("Error", "Something Went Wrong");
+    }
+  }
+
+  void addMonth() {
+    txtPeriod.value++;
+  }
+
+  void removeMonth() {
+    if (txtPeriod.value > 1) {
+      txtPeriod.value--;
+    }
+  }
+
+  void addSeater() {
+    txtSeater.value++;
+  }
+
+  void removeSeater() {
+    if (txtSeater.value > 1) {
+      txtSeater.value--;
+    }
+  }
+
+  void checkAmountField() {
+    if (txtAmount.text.isEmpty) {
+      xValidAmount.value = false;
+    } else if (txtAmount.text.isNotEmpty) {
+      xValidAmount.value = true;
+    }
+  }
+
+  void CheckAllFeilds() {
+    if (xValidAmount.value) {
+      fetchBookingExtend();
+    } else {
+      Get.snackbar("Error", "Enter Amount");
     }
   }
 }
