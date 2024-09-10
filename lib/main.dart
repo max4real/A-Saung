@@ -1,3 +1,4 @@
+import 'package:a_saung/c_data_controller.dart';
 import 'package:a_saung/modules/main/v_main_page.dart';
 import 'package:a_saung/services/c_theme.dart';
 import 'package:flutter/material.dart';
@@ -12,4 +13,5 @@ void main() {
     home: const MainPage(),
   ));
   Get.put(ThemeController());
+  Get.put(DataController());
 }

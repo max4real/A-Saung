@@ -1,5 +1,7 @@
+import 'package:a_saung/c_data_controller.dart';
 import 'package:a_saung/models/m_due_day_model.dart';
 import 'package:a_saung/modules/due_list/c_due_list.dart';
+import 'package:a_saung/modules/guest_details/v_guest_detail.dart';
 import 'package:a_saung/services/c_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +15,8 @@ class DueListPage extends StatelessWidget {
     ThemeController themeController = Get.find();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Guest Due Within A Week'),
+          title: const Text('Guest Due Within A Week',
+              style: TextStyle(fontSize: 16, color: Colors.white)),
           backgroundColor: themeController.secondary,
         ),
         body: SafeArea(
@@ -83,6 +86,7 @@ class DueListPage extends StatelessWidget {
 
   List<DataRow> getData() {
     DueListController controller = Get.find();
+    DataController dataController = Get.find();
     List<DataRow> tempDataRow = [];
     List<DueDayModel> data = controller.dueDayList.value;
 
@@ -100,7 +104,8 @@ class DueListPage extends StatelessWidget {
           )),
         ],
         onSelectChanged: (newValue) {
-          print(element.guestName);
+          dataController.guestID = element.guestId;
+          Get.to(() => const GuestDetailPage());
         },
       );
       tempDataRow.add(dataRow);

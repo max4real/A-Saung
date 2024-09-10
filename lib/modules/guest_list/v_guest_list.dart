@@ -1,9 +1,11 @@
 import 'package:a_saung/c_data_controller.dart';
 import 'package:a_saung/models/m_guest_model.dart';
+import 'package:a_saung/modules/guest_details/v_guest_detail.dart';
 import 'package:a_saung/modules/guest_list/c_guest_list.dart';
 import 'package:a_saung/services/c_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 class GuestListPage extends StatelessWidget {
   const GuestListPage({super.key});
@@ -15,7 +17,8 @@ class GuestListPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Guest Data'),
+          title: const Text('Guest Data',
+              style: TextStyle(fontSize: 16, color: Colors.white)),
           backgroundColor: themeController.secondary,
         ),
         body: SafeArea(
@@ -74,8 +77,8 @@ class GuestListPage extends StatelessWidget {
                                             controller.checkMaleRadio();
                                           },
                                           icon: Icon(
-                                            Icons.male,
-                                            size: 30,
+                                            Iconsax.man,
+                                            size: 23,
                                             color: (value == 1)
                                                 ? Colors.green
                                                 : Colors.grey,
@@ -91,8 +94,8 @@ class GuestListPage extends StatelessWidget {
                                             controller.checkFemaleRadio();
                                           },
                                           icon: Icon(
-                                            Icons.female,
-                                            size: 30,
+                                            Iconsax.woman,
+                                            size: 23,
                                             color: (value == 2)
                                                 ? Colors.green
                                                 : Colors.grey,
@@ -163,30 +166,32 @@ class GuestListPage extends StatelessWidget {
 
   List<DataRow> getData() {
     GuestListController controller = Get.find();
+    DataController dataController = Get.find();
     List<DataRow> tempDataRow = [];
     List<GuestModel> data = controller.guestListFiltered.value;
 
     for (var element in data) {
-      DataRow dataRow = DataRow(cells: [
-        DataCell(Text(element.guestName)),
-        DataCell(Text((element.guestGender == "M") ? "Male" : "Female")),
-        DataCell(Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-                "${element.guestStartDate.day}-${element.guestStartDate.month}-${element.guestStartDate.year}"),
-            const Divider(),
-            Text(
-              "${element.guestEndDate.day}-${element.guestEndDate.month}-${element.guestEndDate.year}",
-              style: const TextStyle(color: Colors.redAccent),
-            ),
-          ],
-        )),
-      ],
-      onSelectChanged: (newValue) {
-          print(element.guestName);
-          /////
+      DataRow dataRow = DataRow(
+        cells: [
+          DataCell(Text(element.guestName)),
+          DataCell(Text((element.guestGender == "M") ? "Male" : "Female")),
+          DataCell(Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                  "${element.guestStartDate.day}-${element.guestStartDate.month}-${element.guestStartDate.year}"),
+              const Divider(),
+              Text(
+                "${element.guestEndDate.day}-${element.guestEndDate.month}-${element.guestEndDate.year}",
+                style: const TextStyle(color: Colors.redAccent),
+              ),
+            ],
+          )),
+        ],
+        onSelectChanged: (newValue) {
+          dataController.guestID = element.guestId;
+          Get.to(() => const GuestDetailPage());
         },
       );
       tempDataRow.add(dataRow);

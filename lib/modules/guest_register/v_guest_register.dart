@@ -4,6 +4,7 @@ import 'package:a_saung/services/c_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 // ignore: must_be_immutable
 class GuestRegisterPage extends StatelessWidget {
@@ -17,7 +18,7 @@ class GuestRegisterPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "အသစ်ထည့်",
-          style: TextStyle(fontSize: 17),
+          style: TextStyle(fontSize: 15,color: Colors.white),
         ),
         backgroundColor: themeController.secondary,
       ),
@@ -60,7 +61,7 @@ class GuestRegisterPage extends StatelessWidget {
                                             ? Colors.grey
                                             : const Color.fromARGB(
                                                 255, 255, 132, 123))),
-                                prefixIcon: Icon(Icons.person,
+                                prefixIcon: Icon(Iconsax.user,
                                     color: themeController.secondary),
                                 label: const Text(
                                   "နာမည်",
@@ -105,7 +106,7 @@ class GuestRegisterPage extends StatelessWidget {
                                             ? Colors.grey
                                             : const Color.fromARGB(
                                                 255, 255, 132, 123))),
-                                prefixIcon: Icon(Icons.phone_rounded,
+                                prefixIcon: Icon(Iconsax.call,
                                     color: themeController.secondary),
                                 label: const Text(
                                   "ဖုန်းနံပါတ်",
@@ -158,7 +159,7 @@ class GuestRegisterPage extends StatelessWidget {
                                     width: 10,
                                   ),
                                   const Icon(
-                                    Icons.calendar_month_rounded,
+                                    Iconsax.calendar,
                                     color: Colors.white,
                                   )
                                 ],
@@ -195,7 +196,7 @@ class GuestRegisterPage extends StatelessWidget {
                                 ],
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
-                                    Icons.control_point_outlined,
+                                    Iconsax.add_circle,
                                     color: themeController.secondary,
                                     size: 20,
                                   ),
@@ -233,7 +234,7 @@ class GuestRegisterPage extends StatelessWidget {
                                 ],
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
-                                    Icons.numbers,
+                                    Iconsax.add_circle,
                                     color: themeController.secondary,
                                     size: 20,
                                   ),
@@ -282,7 +283,7 @@ class GuestRegisterPage extends StatelessWidget {
                                             ? Colors.grey
                                             : const Color.fromARGB(
                                                 255, 255, 132, 123))),
-                                prefixIcon: Icon(Icons.attach_money_rounded,
+                                prefixIcon: Icon(Iconsax.moneys,
                                     color: themeController.secondary),
                                 label: const Text(
                                   "Amount",
