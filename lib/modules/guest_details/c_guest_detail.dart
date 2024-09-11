@@ -16,6 +16,14 @@ class GuestDetailController extends GetxController {
   TextEditingController txtAmount =
       TextEditingController(text: priceRate.toString());
 
+  ValueNotifier<bool> xValidName = ValueNotifier(true);
+  ValueNotifier<bool> xValidPhone = ValueNotifier(true);
+  TextEditingController txtEditName = TextEditingController(text: "");
+  TextEditingController txtEditPhone = TextEditingController(text: "");
+  ValueNotifier<int?> q1 = ValueNotifier(1); //1= male 2=female
+
+  String countryCode = "+959";
+  String phonePattern = r'^\+959[0-9]{7,9}$';
   @override
   void onInit() {
     // TODO: implement onInit
@@ -28,6 +36,54 @@ class GuestDetailController extends GetxController {
 
   Future<void> initLoad() async {
     fetchGuest();
+  }
+
+  void prefixNamePhone() {
+    if (guestDetail.value != null) {
+      txtEditName.text = guestDetail.value!.guestName;
+      txtEditPhone.text = guestDetail.value!.guestPhone.replaceAll("+959", "");
+      if (guestDetail.value!.guestGender == "M") {
+        q1.value = 1;
+      } else if (guestDetail.value!.guestGender == "F") {
+        q1.value = 2;
+      }
+      xValidName.value = true;
+      xValidPhone.value = true;
+    }
+  }
+
+  void checkForUpdate() {
+    if (xValidName.value && xValidPhone.value) {
+      petchProfile();
+    } else {
+      Get.snackbar("Error", "Please Insert All The Feield");
+    }
+  }
+
+  Future<void> petchProfile() async {
+    String url =
+        "${ApiEndPoint.baseUrl}${ApiEndPoint.endpointGuest}/${dataController.guestID}/profile";
+    Get.dialog(const Center(
+      child: CircularProgressIndicator(),
+    ));
+    GetConnect client = GetConnect(timeout: const Duration(seconds: 20));
+    String phoneNumber = countryCode + txtEditPhone.text;
+
+    final response = await client.patch(url, {
+      "name": txtEditName.text,
+      "phone": phoneNumber,
+      "gender": getGender()
+    });
+
+    Get.back();
+    if (response.isOk) {
+      Get.back();
+      Get.snackbar("Success", "Successfuly Updated");
+      fetchGuest();
+    } else {
+      String errMessage = response.body["_metadata"]["message"].toString();
+      Get.snackbar("Error", errMessage);
+    }
   }
 
   void listenPeriodText() {
@@ -151,6 +207,38 @@ class GuestDetailController extends GetxController {
       fetchBookingExtend();
     } else {
       Get.snackbar("Error", "Enter Amount");
+    }
+  }
+
+  void checkNameField() {
+    if (txtEditName.text.isEmpty) {
+      xValidName.value = false;
+    } else if (txtEditName.text.isNotEmpty) {
+      xValidName.value = true;
+    }
+  }
+
+  void checkPhoneField() {
+    if (txtEditPhone.text.isEmpty) {
+      xValidPhone.value = false;
+    } else if (txtEditPhone.text.isNotEmpty) {
+      RegExp phoneRegex = RegExp(phonePattern);
+      if (phoneRegex.hasMatch(countryCode + txtEditPhone.text)) {
+        xValidPhone.value = true;
+      } else {
+        xValidPhone.value = false;
+      }
+    }
+  }
+
+  String getGender() {
+    switch (q1.value) {
+      case 1:
+        return "M";
+      case 2:
+        return "F";
+      default:
+        return "M";
     }
   }
 }

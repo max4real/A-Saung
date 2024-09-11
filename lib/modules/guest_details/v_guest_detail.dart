@@ -1,3 +1,4 @@
+import 'package:a_saung/c_data_controller.dart';
 import 'package:a_saung/modules/booking_info/v_booking_info.dart';
 import 'package:a_saung/modules/guest_details/c_guest_detail.dart';
 import 'package:a_saung/services/c_theme.dart';
@@ -148,8 +149,8 @@ class GuestDetailPage extends StatelessWidget {
                                           children: [
                                             ElevatedButton(
                                               onPressed: () {
-                                                Get.snackbar("Sorry",
-                                                    "This feature is not availabel right now.");
+                                                controller.prefixNamePhone();
+                                                showProfileEditSheet();
                                               },
                                               child: const Icon(Iconsax.edit,
                                                   size: 20),
@@ -187,7 +188,7 @@ class GuestDetailPage extends StatelessWidget {
                                       width: 150,
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            showSheet();
+                                            showExtendSheet();
                                           },
                                           child: const Row(
                                             mainAxisAlignment:
@@ -279,7 +280,175 @@ class GuestDetailPage extends StatelessWidget {
         )));
   }
 
-  void showSheet() {
+  void showProfileEditSheet() {
+    GuestDetailController controller = Get.find();
+    ThemeController themeController = Get.find();
+    Get.bottomSheet(
+        isDismissible: false,
+        Container(
+          height: 350,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            color: Colors.white,
+          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(25),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const SizedBox(height: 15),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ValueListenableBuilder(
+                      valueListenable: controller.xValidName,
+                      builder: (context, xValidName, child) {
+                        return TextField(
+                          controller: controller.txtEditName,
+                          keyboardType: TextInputType.name,
+                          onTapOutside: (event) {
+                            dismissKeyboard();
+                          },
+                          onChanged: (value) {
+                            controller.checkNameField();
+                          },
+                          decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide()),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: xValidName
+                                          ? Colors.grey
+                                          : const Color.fromARGB(
+                                              255, 255, 132, 123))),
+                              prefixIcon: Icon(Iconsax.user,
+                                  color: themeController.secondary),
+                              label: const Text(
+                                "နာမည်",
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              hintStyle: const TextStyle(fontSize: 14)),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 70,
+                    child: ValueListenableBuilder(
+                      valueListenable: controller.xValidPhone,
+                      builder: (context, value, child) {
+                        return TextField(
+                          controller: controller.txtEditPhone,
+                          keyboardType: TextInputType.phone,
+                          onTapOutside: (event) {
+                            dismissKeyboard();
+                          },
+                          onChanged: (value) {
+                            controller.checkPhoneField();
+                          },
+                          maxLength: 9,
+                          inputFormatters: <TextInputFormatter>[
+                            ///here
+                            // FilteringTextInputFormatter.allow(
+                            //     RegExp(r'^\d{0,9}$'))
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^(0|[1-9][0-9]*)$'))
+                          ],
+                          decoration: InputDecoration(
+                              prefixText: "+959",
+                              border: const OutlineInputBorder(),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: value
+                                          ? Colors.grey
+                                          : const Color.fromARGB(
+                                              255, 255, 132, 123))),
+                              prefixIcon: Icon(Iconsax.call,
+                                  color: themeController.secondary),
+                              label: const Text(
+                                "ဖုန်းနံပါတ်",
+                                style: TextStyle(fontSize: 14),
+                              )),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  makeRadio(),
+                  const Divider(),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                      height: 40,
+                      width: 150,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            controller.checkForUpdate();
+                          },
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("SAVE"),
+                              SizedBox(width: 5),
+                              Icon(Iconsax.save_21, size: 15)
+                            ],
+                          )))
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
+  Widget makeRadio() {
+    GuestDetailController controller = Get.find();
+    ThemeController themeController = Get.find();
+
+    return ValueListenableBuilder(
+      valueListenable: controller.q1,
+      builder: (context, value, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  value: 1,
+                  groupValue: value,
+                  activeColor: themeController.primary,
+                  onChanged: (value) {
+                    controller.q1.value = value;
+                  },
+                ),
+                const Text("ကျား")
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  value: 2,
+                  groupValue: value,
+                  activeColor: themeController.primary,
+                  onChanged: (value) {
+                    controller.q1.value = value;
+                  },
+                ),
+                const Text("မ")
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showExtendSheet() {
     GuestDetailController controller = Get.find();
     ThemeController themeController = Get.find();
     Get.bottomSheet(

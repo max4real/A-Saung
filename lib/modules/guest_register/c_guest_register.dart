@@ -106,7 +106,8 @@ class GuestRegisterController extends GetxController {
       xValidName.value = false;
       xValidPhone.value = false;
     } else {
-      Get.snackbar("Error", "Something Went Wrong");
+      String errMessage = response.body["_metadata"]["message"].toString();
+      Get.snackbar("Error", errMessage);
     }
   }
 
