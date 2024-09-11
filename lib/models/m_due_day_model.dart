@@ -18,7 +18,7 @@ class DueDayModel extends GuestModel {
         guestPhone: data["phone"].toString(),
         guestGender: data["gender"].toString(),
         guestStartDate:
-            DateTime.tryParse(data["stratDate"].toString()) ?? DateTime.now(),
+            DateTime.tryParse(data["startDate"].toString()) ?? DateTime.now(),
         guestEndDate:
             DateTime.tryParse(data["dueDate"].toString()) ?? DateTime.now(),
         dueDays: int.tryParse(data["day"].toString()) ?? -1);

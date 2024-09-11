@@ -1,3 +1,4 @@
+import 'package:a_saung/modules/booking_info/v_booking_info.dart';
 import 'package:a_saung/modules/guest_details/c_guest_detail.dart';
 import 'package:a_saung/services/c_theme.dart';
 import 'package:flutter/material.dart';
@@ -169,8 +170,8 @@ class GuestDetailPage extends StatelessWidget {
                                             ),
                                             ElevatedButton(
                                               onPressed: () {
-                                                Get.snackbar("Sorry",
-                                                    "This feature is not availabel right now.");
+                                                Get.to(() =>
+                                                    const BookingInfoPage());
                                               },
                                               child: const Icon(
                                                   Iconsax.information,
