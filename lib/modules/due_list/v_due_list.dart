@@ -15,7 +15,7 @@ class DueListPage extends StatelessWidget {
     ThemeController themeController = Get.find();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Guest Due Within A Week',
+          title: const Text('တစ်ပတ်အတွင်းရက်ချိန်းများ',
               style: TextStyle(fontSize: 16, color: Colors.white)),
           backgroundColor: themeController.secondary,
         ),
@@ -55,26 +55,26 @@ class DueListPage extends StatelessWidget {
             showCheckboxColumn: false,
             columns: const <DataColumn>[
               DataColumn(
-                label: const Expanded(
+                label:  Expanded(
                   child: Text(
-                    'Name',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    'နာမည်',
+                    style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
               DataColumn(
                 label: Expanded(
                   child: Text(
-                    'Phone',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    'ဖုန်း',
+                    style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
               DataColumn(
                 label: Expanded(
                   child: Text(
-                    'Due In',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    'ရက်ချိန်း',
+                    style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.w600),
                   ),
                 ),
               ),

@@ -6,6 +6,7 @@ import 'package:a_saung/services/c_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 class GuestListPage extends StatelessWidget {
   const GuestListPage({super.key});
@@ -17,7 +18,7 @@ class GuestListPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Guest Data',
+          title: const Text('အဆောင်သူ/သား စာရင်း',
               style: TextStyle(fontSize: 16, color: Colors.white)),
           backgroundColor: themeController.secondary,
         ),
@@ -56,7 +57,8 @@ class GuestListPage extends StatelessWidget {
                                   controller.searchGuest();
                                 },
                                 decoration: InputDecoration(
-                                    hintText: "Search",
+                                    hintText: "ရှာဖွှေမည်",
+                                    hintStyle: const TextStyle(fontSize: 14),
                                     suffixIcon: IconButton(
                                         onPressed: () {
                                           controller.clearSearchBar();
@@ -137,7 +139,7 @@ class GuestListPage extends StatelessWidget {
               DataColumn(
                 label: Expanded(
                   child: Text(
-                    'Name',
+                    'နာမည်',
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),
@@ -145,15 +147,15 @@ class GuestListPage extends StatelessWidget {
               DataColumn(
                 label: Expanded(
                   child: Text(
-                    'Gender',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+                    'ကျား/မ',
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 13),
                   ),
                 ),
               ),
               DataColumn(
                 label: Expanded(
                   child: Text(
-                    'Date',
+                    'ရက်',
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),
@@ -173,20 +175,41 @@ class GuestListPage extends StatelessWidget {
     for (var element in data) {
       DataRow dataRow = DataRow(
         cells: [
-          DataCell(Text(element.guestName)),
-          DataCell(Text((element.guestGender == "M") ? "Male" : "Female")),
-          DataCell(Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                  "${element.guestStartDate.day}-${element.guestStartDate.month}-${element.guestStartDate.year}"),
-              const Divider(),
-              Text(
-                "${element.guestEndDate.day}-${element.guestEndDate.month}-${element.guestEndDate.year}",
-                style: const TextStyle(color: Colors.redAccent),
-              ),
-            ],
+          DataCell(SizedBox(
+              child: Text(
+            element.guestName,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ))),
+          DataCell(SizedBox(
+              width: 45,
+              child: Center(
+                  child: Text(
+                (element.guestGender == "M") ? "ကျား" : "မ",
+                style: const TextStyle(fontSize: 12),
+              )))),
+          DataCell(SizedBox(
+            width: 85,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                // Text(
+                //     "${element.guestStartDate.day}-${element.guestStartDate.month}-${element.guestStartDate.year}"),
+                Text(
+                  DateFormat.yMMMd().format(element.guestStartDate),
+                  style: const TextStyle(fontSize: 13,fontWeight: FontWeight.bold),
+                ),
+                const Divider(),
+                // Text(
+                //   "${element.guestEndDate.day}-${element.guestEndDate.month}-${element.guestEndDate.year}",
+                //   style: const TextStyle(color: Colors.redAccent),
+                // ),
+                Text(
+                  DateFormat.yMMMd().format(element.guestEndDate),
+                  style:  TextStyle(color: Colors.redAccent, fontSize: 13,fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           )),
         ],
         onSelectChanged: (newValue) {

@@ -2,6 +2,7 @@ import 'package:a_saung/modules/booking_info/c_booking_info.dart';
 import 'package:a_saung/services/c_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class BookingInfoPage extends StatelessWidget {
   const BookingInfoPage({super.key});
@@ -12,7 +13,7 @@ class BookingInfoPage extends StatelessWidget {
     ThemeController themeController = Get.find();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Booked Info',
+        title: const Text('သက်တန်းတိုးစာရင်း',
             style: TextStyle(fontSize: 16, color: Colors.white)),
         backgroundColor: themeController.secondary,
       ),
@@ -57,13 +58,15 @@ class BookingInfoPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text(
-                                        "Start Date",
+                                        "စတင်သည့်နေ့",
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontStyle: FontStyle.italic),
                                       ),
                                       Text(
-                                        "${each.bokStartDate.day}-${each.bokStartDate.month}-${each.bokStartDate.year}",
+                                        // "${each.bokStartDate.day}-${each.bokStartDate.month}-${each.bokStartDate.year}",
+                                        DateFormat.yMMMd().format(
+                                                    each.bokStartDate),
                                         style: const TextStyle(fontSize: 15),
                                       ),
                                     ],
@@ -76,13 +79,15 @@ class BookingInfoPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text(
-                                        "Due Date",
+                                        "ရက်ချိန်းနေ့",
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontStyle: FontStyle.italic),
                                       ),
                                       Text(
-                                        "${each.bokDueDate.day}-${each.bokDueDate.month}-${each.bokDueDate.year}",
+                                        // "${each.bokDueDate.day}-${each.bokDueDate.month}-${each.bokDueDate.year}",
+                                        DateFormat.yMMMd().format(
+                                                    each.bokDueDate),
                                         style: const TextStyle(fontSize: 15),
                                       ),
                                     ],
@@ -96,13 +101,13 @@ class BookingInfoPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text(
-                                        "Period",
+                                        "စုစုပေါင်းလ",
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontStyle: FontStyle.italic),
                                       ),
                                       Text(
-                                        "${each.bokPeriod} Months",
+                                        "${each.bokPeriod} လ",
                                         style: const TextStyle(fontSize: 15),
                                       ),
                                     ],
@@ -115,9 +120,9 @@ class BookingInfoPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text(
-                                        "Seater",
+                                        "ဦးရေ",
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontStyle: FontStyle.italic),
                                       ),
                                       Text(
@@ -135,13 +140,13 @@ class BookingInfoPage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text(
-                                        "Amount",
+                                        "စုစုပေါင်းငွေ",
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontStyle: FontStyle.italic),
                                       ),
                                       Text(
-                                        "${each.bokAmount} Ks",
+                                        "${each.bokAmount} ကျပ်",
                                         style: const TextStyle(fontSize: 15),
                                       ),
                                     ],

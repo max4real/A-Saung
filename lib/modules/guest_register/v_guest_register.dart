@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class GuestRegisterPage extends StatelessWidget {
@@ -129,9 +130,9 @@ class GuestRegisterPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            "Select Date:",
+                            "စတင်နေသည့်ရက်:",
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromARGB(255, 89, 87, 87)),
                           ),
@@ -145,11 +146,11 @@ class GuestRegisterPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 40),
+                                  vertical: 10, horizontal: 30),
                               child: Row(
                                 children: [
                                   Text(
-                                    "${value.day}-${value.month}-${value.year}",
+                                    DateFormat.yMMMd().format(value),
                                     style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.white,
@@ -209,7 +210,7 @@ class GuestRegisterPage extends StatelessWidget {
                                               ? Colors.grey
                                               : const Color.fromARGB(
                                                   255, 255, 132, 123))),
-                                  label: const Text("Period"),
+                                  label: const Text("နေမည့်လ"),
                                 ),
                               );
                             },
@@ -247,7 +248,7 @@ class GuestRegisterPage extends StatelessWidget {
                                               ? Colors.grey
                                               : const Color.fromARGB(
                                                   255, 255, 132, 123))),
-                                  label: const Text("Seater"),
+                                  label: const Text("ဦးရေ"),
                                 ),
                               );
                             },
@@ -286,7 +287,7 @@ class GuestRegisterPage extends StatelessWidget {
                                 prefixIcon: Icon(Iconsax.moneys,
                                     color: themeController.secondary),
                                 label: const Text(
-                                  "Amount",
+                                  "စုစုပေါင်းငွေ",
                                   style: TextStyle(fontSize: 14),
                                 )),
                           );

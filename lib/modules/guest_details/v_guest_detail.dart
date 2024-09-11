@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GuestDetailPage extends StatelessWidget {
@@ -185,7 +186,7 @@ class GuestDetailPage extends StatelessWidget {
                                   ),
                                   SizedBox(
                                       height: 40,
-                                      width: 150,
+                                      width: 165,
                                       child: ElevatedButton(
                                           onPressed: () {
                                             showExtendSheet();
@@ -194,7 +195,10 @@ class GuestDetailPage extends StatelessWidget {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Text("EXTEND"),
+                                              Text(
+                                                "သက်တန်းတိုးရန်",
+                                                style: TextStyle(fontSize: 13),
+                                              ),
                                               SizedBox(width: 5),
                                               Icon(Iconsax.add_circle, size: 15)
                                             ],
@@ -209,11 +213,14 @@ class GuestDetailPage extends StatelessWidget {
                                           elevation: 0.5,
                                           child: ListTile(
                                             leading: const Icon(Iconsax.people),
-                                            title: const Text("Gender"),
+                                            title: const Text(
+                                              "ကျား/မ",
+                                              style: TextStyle(fontSize: 14),
+                                            ),
                                             trailing: Text(
                                                 value.guestGender == "M"
-                                                    ? "Male"
-                                                    : "Female",
+                                                    ? "ကျား"
+                                                    : "မ",
                                                 style: const TextStyle(
                                                     fontSize: 13)),
                                           )),
@@ -223,9 +230,14 @@ class GuestDetailPage extends StatelessWidget {
                                           child: ListTile(
                                             leading:
                                                 const Icon(Iconsax.calendar),
-                                            title: const Text("Start Date"),
+                                            title: const Text(
+                                              "စတင်သည့်နေ့",
+                                              style: TextStyle(fontSize: 14),
+                                            ),
                                             trailing: Text(
-                                                "${value.guestStartDate.day}-${value.guestStartDate.month}-${value.guestStartDate.year}",
+                                                // "${value.guestStartDate.day}-${value.guestStartDate.month}-${value.guestStartDate.year}",
+                                                DateFormat.yMMMd().format(
+                                                    value.guestStartDate),
                                                 style: const TextStyle(
                                                     fontSize: 13)),
                                           )),
@@ -236,9 +248,14 @@ class GuestDetailPage extends StatelessWidget {
                                             leading: const Icon(
                                                 Iconsax.calendar,
                                                 color: Colors.redAccent),
-                                            title: const Text("Due Date"),
+                                            title: const Text(
+                                              "ရက်ချိန်းနေ့",
+                                              style: TextStyle(fontSize: 14),
+                                            ),
                                             trailing: Text(
-                                                "${value.guestEndDate.day}-${value.guestEndDate.month}-${value.guestEndDate.year}",
+                                                // "${value.guestEndDate.day}-${value.guestEndDate.month}-${value.guestEndDate.year}",
+                                                DateFormat.yMMMd().format(
+                                                    value.guestEndDate),
                                                 style: const TextStyle(
                                                     fontSize: 13)),
                                           )),
@@ -248,9 +265,12 @@ class GuestDetailPage extends StatelessWidget {
                                           child: ListTile(
                                             leading:
                                                 const Icon(Iconsax.hashtag_1),
-                                            title: const Text("Total Month"),
+                                            title: const Text(
+                                              "စုစုပေါင်းလ",
+                                              style: TextStyle(fontSize: 14),
+                                            ),
                                             trailing: Text(
-                                                "${value.totalMonth} month(s)",
+                                                "${value.totalMonth} လ",
                                                 style: const TextStyle(
                                                     fontSize: 13)),
                                           )),
@@ -259,9 +279,12 @@ class GuestDetailPage extends StatelessWidget {
                                           elevation: 0.5,
                                           child: ListTile(
                                             leading: const Icon(Iconsax.moneys),
-                                            title: const Text("Money Spent"),
+                                            title: const Text(
+                                              "စုစုပေါင်းငွေ",
+                                              style: TextStyle(fontSize: 14),
+                                            ),
                                             trailing: Text(
-                                                "${value.spendAmount} Ks",
+                                                "${value.spendAmount} ကျပ်",
                                                 style: const TextStyle(
                                                     fontSize: 13)),
                                           )),
@@ -394,7 +417,7 @@ class GuestDetailPage extends StatelessWidget {
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("SAVE"),
+                              Text("သိမ်းမည်"),
                               SizedBox(width: 5),
                               Icon(Iconsax.save_21, size: 15)
                             ],
@@ -476,7 +499,7 @@ class GuestDetailPage extends StatelessWidget {
                         children: [
                           const Padding(
                             padding: EdgeInsets.only(left: 15),
-                            child: Text('Extend Month'),
+                            child: Text('သက်တန်းတိုးမည့်လ'),
                           ),
                           const Spacer(),
                           IconButton(
@@ -525,7 +548,7 @@ class GuestDetailPage extends StatelessWidget {
                         children: [
                           const Padding(
                             padding: EdgeInsets.only(left: 15),
-                            child: Text('Seater'),
+                            child: Text('ဦးရေ'),
                           ),
                           const Spacer(),
                           IconButton(
@@ -574,7 +597,7 @@ class GuestDetailPage extends StatelessWidget {
                         children: [
                           const Padding(
                             padding: EdgeInsets.only(left: 15),
-                            child: Text('Amount'),
+                            child: Text('စုစုပေါင်းငွေ'),
                           ),
                           const Spacer(),
                           SizedBox(
@@ -606,7 +629,7 @@ class GuestDetailPage extends StatelessWidget {
                                         prefixIcon: Icon(Iconsax.moneys,
                                             color: themeController.secondary),
                                         label: const Text(
-                                          "Amount",
+                                          "ငွေသား",
                                           style: TextStyle(fontSize: 14),
                                         )),
                                   );
@@ -628,7 +651,7 @@ class GuestDetailPage extends StatelessWidget {
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("SAVE"),
+                            Text("သိမ်းမည်"),
                             SizedBox(width: 5),
                             Icon(Iconsax.save_21, size: 15)
                           ],

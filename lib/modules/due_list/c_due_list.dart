@@ -40,11 +40,11 @@ class DueListController extends GetxController {
   String checkDay(int dueDay) {
     switch (dueDay) {
       case 0:
-        return "Today";
+        return "ယနေ့";
       case 1:
-        return "Tomorrow";
+        return "မနက်ဖြန်";
       default:
-        return "$dueDay Days";
+        return "$dueDay ရက်";
     }
   }
 }
