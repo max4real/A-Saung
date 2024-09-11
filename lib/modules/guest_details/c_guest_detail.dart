@@ -89,10 +89,30 @@ class GuestDetailController extends GetxController {
     xBooking.value = false;
     Get.back();
     if (response.isOk) {
-      Get.snackbar("Success", "Guest Created Successfuly");
+      Get.back();
+      Get.snackbar("Success", "Booking Extended Successfuly");
+      fetchGuest();
       txtPeriod.value = 1;
       txtSeater.value = 1;
       txtAmount.text = priceRate.toString();
+    } else {
+      Get.snackbar("Error", "Something Went Wrong");
+    }
+  }
+
+  Future<void> deleteGuestProfile() async {
+    String url =
+        "${ApiEndPoint.baseUrl}${ApiEndPoint.endpointGuest}/${dataController.guestID}";
+    GetConnect client = GetConnect(timeout: const Duration(seconds: 20));
+    Get.dialog(const Center(
+      child: CircularProgressIndicator(),
+    ));
+    final response = await client.delete(url);
+    Get.back();
+    if (response.isOk) {
+      Get.back();
+      Get.back();
+      Get.snackbar("Message", "Profile Deleted Successfuly");
     } else {
       Get.snackbar("Error", "Something Went Wrong");
     }
@@ -126,7 +146,7 @@ class GuestDetailController extends GetxController {
     }
   }
 
-  void CheckAllFeilds() {
+  void checkAllFeilds() {
     if (xValidAmount.value) {
       fetchBookingExtend();
     } else {

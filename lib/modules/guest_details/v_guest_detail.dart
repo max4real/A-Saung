@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class GuestDetailPage extends StatelessWidget {
   const GuestDetailPage({super.key});
@@ -28,47 +29,82 @@ class GuestDetailPage extends StatelessWidget {
                 valueListenable: controller.guestDetail,
                 builder: (context, value, child) {
                   if (value == null) {
-                    return const Center(child: Text("No Data Yet!"));
+                    return const Center(child: Text("Couldn't Find Profile"));
                   } else {
                     return Padding(
                         padding: EdgeInsets.only(
                             top: (MediaQuery.of(context).viewPadding.top),
                             left: 15,
                             right: 15),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                                width: double.infinity,
-                                height: 60,
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "Guest Profile",
-                                        style: TextStyle(
-                                            fontSize: 23,
-                                            fontWeight: FontWeight.w300),
-                                      ),
-                                      TextButton(
-                                          onPressed: () {
-                                            Get.snackbar("Sorry",
-                                                "This feature is not availabel right now.");
-                                          },
-                                          child: const Text(
-                                            "Delete",
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 245, 116, 116),
-                                                fontSize: 13),
-                                          ))
-                                    ],
-                                  ),
-                                )),
-                            Expanded(
-                              child: Column(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                  width: double.infinity,
+                                  height: 60,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "Guest Profile",
+                                          style: TextStyle(
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.defaultDialog(
+                                                title: "Are you sure?",
+                                                middleText:
+                                                    "Do you really want to delete this account?\nYou will not be able to undo this action.",
+                                                backgroundColor:
+                                                    themeController.background,
+                                                titleStyle: const TextStyle(
+                                                    color: Colors.black),
+                                                middleTextStyle:
+                                                    const TextStyle(
+                                                        color: Colors.black),
+                                                cancel: SizedBox(
+                                                  height: 40,
+                                                  width: 100,
+                                                  child: ElevatedButton(
+                                                      onPressed: () {
+                                                        controller
+                                                            .deleteGuestProfile();
+                                                      },
+                                                      child: const Text(
+                                                        "Delete",
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .redAccent),
+                                                      )),
+                                                ),
+                                                confirm: SizedBox(
+                                                  height: 40,
+                                                  width: 100,
+                                                  child: ElevatedButton(
+                                                      onPressed: () {
+                                                        Get.back();
+                                                      },
+                                                      child:
+                                                          const Text("Cancel")),
+                                                ),
+                                              );
+                                            },
+                                            child: const Text(
+                                              "Delete",
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 245, 116, 116),
+                                                  fontSize: 13),
+                                            ))
+                                      ],
+                                    ),
+                                  )),
+                              Column(
                                 children: [
                                   SizedBox(
                                     width: double.infinity,
@@ -122,9 +158,8 @@ class GuestDetailPage extends StatelessWidget {
                                             ),
                                             ElevatedButton(
                                               onPressed: () {
-                                                Get.snackbar("Sorry",
-                                                    "This feature is not availabel right now.");
-                                                Get.close(1);
+                                                launchUrlString(
+                                                    "tel:${value.guestPhone.replaceAll("+95", "0")}");
                                               },
                                               child: const Icon(Iconsax.call,
                                                   size: 20),
@@ -231,9 +266,9 @@ class GuestDetailPage extends StatelessWidget {
                                     ]),
                                   ),
                                 ],
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ));
                   }
                 },
@@ -418,7 +453,7 @@ class GuestDetailPage extends StatelessWidget {
                     width: 150,
                     child: ElevatedButton(
                         onPressed: () {
-                          controller.CheckAllFeilds();
+                          controller.checkAllFeilds();
                         },
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
