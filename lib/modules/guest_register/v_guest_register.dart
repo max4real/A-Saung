@@ -130,7 +130,7 @@ class GuestRegisterPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            "စတင်နေသည့်ရက်:",
+                            "စတင်သည့်ရက်:",
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,

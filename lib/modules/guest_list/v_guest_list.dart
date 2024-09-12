@@ -57,7 +57,7 @@ class GuestListPage extends StatelessWidget {
                                   controller.searchGuest();
                                 },
                                 decoration: InputDecoration(
-                                    hintText: "ရှာဖွှေမည်",
+                                    hintText: "ရှာဖွေမည်",
                                     hintStyle: const TextStyle(fontSize: 14),
                                     suffixIcon: IconButton(
                                         onPressed: () {

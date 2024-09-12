@@ -13,7 +13,7 @@ class BookingInfoPage extends StatelessWidget {
     ThemeController themeController = Get.find();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('သက်တန်းတိုးစာရင်း',
+        title: const Text('သက်တမ်းတိုးစာရင်း',
             style: TextStyle(fontSize: 16, color: Colors.white)),
         backgroundColor: themeController.secondary,
       ),

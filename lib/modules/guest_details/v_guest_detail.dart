@@ -196,7 +196,7 @@ class GuestDetailPage extends StatelessWidget {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                "သက်တန်းတိုးရန်",
+                                                "သက်တမ်းတိုးရန်",
                                                 style: TextStyle(fontSize: 13),
                                               ),
                                               SizedBox(width: 5),
@@ -499,7 +499,7 @@ class GuestDetailPage extends StatelessWidget {
                         children: [
                           const Padding(
                             padding: EdgeInsets.only(left: 15),
-                            child: Text('သက်တန်းတိုးမည့်လ'),
+                            child: Text('သက်တမ်းတိုးမည့်လ'),
                           ),
                           const Spacer(),
                           IconButton(
