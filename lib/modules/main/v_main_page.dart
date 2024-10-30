@@ -32,10 +32,10 @@ class _MainPageState extends State<MainPage> {
             controller.selectedIndex.value = value;
           },
           destinations: const [
-            NavigationDestination(icon: Icon(Iconsax.user_add), label: "ADD"),
+            NavigationDestination(icon: Icon(Iconsax.user), label: "CONTACT"),
             NavigationDestination(
-                icon: Icon(Iconsax.search_normal), label: "SEARCH"),
-            NavigationDestination(icon: Icon(Iconsax.calendar), label: "DUE"),
+                icon: Icon(Iconsax.message), label: "MESSAGE"),
+            NavigationDestination(icon: Icon(Iconsax.profile), label: "PROFILE"),
           ],
         );
       }),
